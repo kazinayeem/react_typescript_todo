@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import SearchItem from "./components/SearchItem";
 import ShowTodo from "./components/ShowTodo";
 import Todo from "./components/Todo";
 
@@ -9,6 +10,7 @@ type Todos = {
 };
 function App() {
   const [todos, settodos] = useState<Todos[]>([]);
+  const [search, setsearch] = useState<string>("");
 
   const addtodo = (data: { id: number; todo: string }) => {
     settodos([...todos, data]);
@@ -25,14 +27,19 @@ function App() {
 
   const updateTodo = (data: Todos, value: string) => {
     settodos(todos.map((t) => (t.id === data.id ? { ...t, todo: value } : t)));
+  };
 
-    //const filter = todos.find((todo) => todo.id === data.id) ;
+  const searchHandeler = (value: string) => {
+    const filter = todos.filter((todo) =>
+      todo.todo.includes(value.toLocaleLowerCase())
+    );
+    settodos(filter);
   };
 
   return (
     <div className="container">
       <Todo addtodo={addtodo} clearAll={clearAll} />
-
+      <SearchItem handelChange={searchHandeler} />
       {todos.length === 0 ? (
         <h1>no data </h1>
       ) : (
