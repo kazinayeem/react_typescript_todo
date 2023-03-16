@@ -30,10 +30,13 @@ function App() {
   };
 
   const searchHandeler = (value: string) => {
-    const filter = todos.filter((todo) =>
-      todo.todo.includes(value.toLocaleLowerCase())
+    setsearch(value);
+  };
+
+  const searchtrem = () => {
+    return todos.filter((t) =>
+      t.todo.toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
-    settodos(filter);
   };
 
   return (
@@ -44,7 +47,7 @@ function App() {
         <h1>no data </h1>
       ) : (
         <ShowTodo
-          todos={todos}
+          todos={searchtrem()}
           updateTodo={updateTodo}
           deleteTodo={deleteTodo}
         />
